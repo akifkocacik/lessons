@@ -2,8 +2,13 @@ import React from 'react';
 
 const Link = ({ to, children }) => {
   function onClickHandler(event) {
+    if (event.metaKey || event.ctrlKey) return;
+
     event.preventDefault();
     window.history.pushState({}, '', to);
+    // PopStateEvent React'a ait
+    const routeChangedEvent = new PopStateEvent('routeChanged');
+    window.dispatchEvent(routeChangedEvent);
   }
 
   return (
@@ -17,3 +22,5 @@ export default Link;
 
 // (event) => onClickHandler(event)
 // window.location.pushState
+// new PopStateEvent("routeChanged");
+// window.dispatchEvent(event);
